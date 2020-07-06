@@ -225,27 +225,12 @@ target=`getprop ro.board.platform`
 function configure_zram_parameters() {
     MemTotalStr=`cat /proc/meminfo | grep MemTotal`
     MemTotal=${MemTotalStr:16:8}
-
-    low_ram=`getprop ro.config.low_ram`
-
-    # Zram disk - 75% for Go devices.
-    # For 512MB Go device, size = 384MB, set same for Non-Go.
-    # For 1GB Go device, size = 768MB, set same for Non-Go.
-    # For >=2GB Non-Go device, size = 1GB
-    # And enable lz4 zram compression for Go targets.
-
-    if [ "$low_ram" == "true" ]; then
-        echo lz4 > /sys/block/zram0/comp_algorithm
-    fi
-
+    # Set Zram disk size to 512MB for 3GB and below targets, 1GB for above 3GB targets.
     if [ -f /sys/block/zram0/disksize ]; then
-        if [ $MemTotal -le 524288 ]; then
-            echo 402653184 > /sys/block/zram0/disksize
-        elif [ $MemTotal -le 1048576 ]; then
-            echo 805306368 > /sys/block/zram0/disksize
-        else
-            # Set Zram disk size=1GB for >=2GB Non-Go targets.
+        if [ $MemTotal -gt 3145728 ]; then
             echo 1073741824 > /sys/block/zram0/disksize
+        else
+            echo 2147483648 > /sys/block/zram0/disksize
         fi
         mkswap /dev/block/zram0
         swapon /dev/block/zram0 -p 32758
@@ -328,10 +313,11 @@ function configure_memory_parameters() {
     #
 
 ProductName=`getprop ro.product.name`
+
 low_ram=`getprop ro.config.low_ram`
 
-if [ "$ProductName" == "msmnile" ]; then
-      # Enable ZRAM
+if [ "$ProductName" == "sakura" ] || [ "$ProductName" == "daisy" ] ; then
+# Enable ZRAM
       configure_zram_parameters
       configure_read_ahead_kb_values
       echo 0 > /proc/sys/vm/page-cluster
