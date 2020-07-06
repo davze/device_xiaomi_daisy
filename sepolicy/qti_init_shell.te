@@ -20,3 +20,12 @@ allow qti_init_shell system_data_file:dir { open };
 allow qti_init_shell system_data_file:file { getattr };
 allow qti_init_shell system_data_file:dir { remove_name };
 allow qti_init_shell system_data_file:dir { rmdir };
+
+#Thermal
+set_prop(qti_init_shell, thermal_engine_prop);
+
+#Power
+set_prop(qti_init_shell, thermal_engine_prop);
+
+#Sensors
+set_prop(qti_init_shell, sensors_panel_prop);

@@ -158,7 +158,8 @@ vendor.video.disable.ubwc=1
 
 # Memory optimizations
 PRODUCT_PROPERTY_OVERRIDES += \
-ro.vendor.qti.sys.fw.bservice_enable=true
+ro.vendor.qti.sys.fw.bservice_enable=true \
+vendor.debug.trace.perf=1
 
 # Perf
 PRODUCT_PROPERTY_OVERRIDES += \
