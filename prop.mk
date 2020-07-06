@@ -49,25 +49,60 @@ qcom.bluetooth.soc=smd \
 ro.bluetooth.hfp.ver=1.7 \
 ro.qualcomm.bt.hci_transport=smd
 
+# camera hal buffer management
+PRODUCT_PROPERTY_OVERRIDES += \
+persist.camera.managebuffer.enable=1
+
 # Camera
 PRODUCT_PROPERTY_OVERRIDES += \
-vidc.enc.dcvs.extra-buff-count=2 \
-media.camera.ts.monotonic=1 \
 persist.vendor.camera.display.lmax=1280x720 \
-persist.vendor.camera.display.umax=1920x108 \
-vendor.camera.hal1.packagelist=com.skype.raider,com.google.android.talk,com.whatsapp \
-vendor.camera.lowpower.record.enable=1 \
-vendor.camera.aux.packagelist=org.codeaurora.snapcam,com.android.camera,com.huaqin.factory,com.mi.AutoTest \
-vendor.camera.aux.packagelist2=com.android.systemui,com.huaqin.cameraautotest,com.huaqin.runtime \
-vendor.camera.aux.packageblacklist=com.discord \
+persist.vendor.camera.display.umax=1920x1080 \
+camera.lowpower.record.enable=1 \
+media.camera.ts.monotonic=1 \
+persist.camera.CDS=off \
+persist.camera.dual.camera=0 \
+persist.camera.gyro.disable=0 \
 persist.vendor.qti.telephony.vt_cam_interface=2 \
-persist.vendor.camera.dual.camera=0 \
+vidc.enc.dcvs.extra-buff-count=2 \
+vendor.camera.lowpower.record.enable=1 \
+persist.vendor.camera.dual.camera=0
+
+#Additional prop camera
+PRODUCT_PROPERTY_OVERRIDES += \
+persist.vendor.camera.HAL3.enabled=1 \
+persist.camera.eis.enable=1 \
+persist.camera.HAL3.enabled=1 \
 persist.vendor.camera.eis.enable=1 \
+persist.camera.max.previewfps=60 \
+persist.camera.isp.clock.optmz=0 \
+persist.camera.stats.test=5 \
+persist.vendor.camera.stats.test=5 \
 persist.vendor.camera.gyro.disable=0 \
 persist.vendor.camera.isp.clock.optmz=0 \
-persist.vendor.camera.stats.test=5 \
-persist.vendor.camera.CDS=off \
-persist.camera.HAL3.enabled=1
+persist.vendor.camera.CDS=off
+
+# AF wait AEC settle count
+PRODUCT_PROPERTY_OVERRIDES += \
+ro.config.calibration_cad=/vendor/etc/calibration_cad.xml \
+persist.bokeh.switch.lux=290
+
+# Expose aux camera for below packages
+PRODUCT_PROPERTY_OVERRIDES += \
+camera.aux.packagelist=org.lineageos.snap,com.google.android.GoogleCameraWide,com.android.camera \
+vendor.camera.aux.packagelist=org.lineageos.snap,com.google.android.GoogleCameraWide,com.android.camera \
+vendor.camera.aux.packagelist2=com.android.systemui,com.huaqin.cameraautotest,com.huaqin.runtime \
+vendor.camera.aux.packageblacklist=com.discord
+
+# HAL1
+PRODUCT_PROPERTY_OVERRIDES += \
+vendor.camera.hal1.packagelist=com.skype.raider,com.whatsapp,com.instagram.android
+
+#Temporal Noise Reduction
+PRODUCT_PROPERTY_OVERRIDES += \
+persist.tnr.process.plates=1 \
+persist.vendor.tnr.process.plates=1 \
+persist.denoise.process.plates=1 \
+persist.vendor.denoise.process.plates=1
 
 # Cne/Dpm
 PRODUCT_PROPERTY_OVERRIDES += \
