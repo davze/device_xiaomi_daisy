@@ -26,6 +26,7 @@ set_prop(qti_init_shell, thermal_engine_prop);
 
 #Power
 set_prop(qti_init_shell, thermal_engine_prop);
+set_prop(qti_init_shell, power_prop);
 
 #Sensors
 set_prop(qti_init_shell, sensors_panel_prop);
